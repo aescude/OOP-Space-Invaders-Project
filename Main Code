@@ -1,0 +1,77 @@
+import turtle
+from turtle import *
+import random
+
+screen = Screen()
+screen.title("Space Invaders")
+screen.bgcolor("black")
+screen.tracer(0)
+
+class playership:
+    def __init__(self):
+        self.turtle = Turtle()
+        self.turtle.shape("triangle")
+        self.turtle.color("white")
+        self.turtle.penup()
+        self.turtle.goto(0, -300)
+        self.turtle.setheading(90)
+
+    def move_left(self):
+        if self.turtle.xcor() > -340:
+            self.turtle.setx(self.turtle.xcor() - 20)
+
+    def move_right(self):
+        if self.turtle.xcor() < 340:
+            self.turtle.setx(self.turtle.xcor() + 20)
+
+    def get_x_position(self):
+        return self.turtle.xcor()
+
+    def get_y_position(self):
+        return self.turtle.ycor()
+
+class laser:
+    def __init__(self):
+        self.turtle = Turtle()
+        self.turtle.shape("square")
+        self.turtle.color("red")
+        self.turtle.setheading(90)
+        self.turtle.shapesize(stretch_wid=1, stretch_len=50)
+        self.turtle.penup()
+        self.turtle.hideturtle()
+
+    #hide laser function for the ontimer
+    def hide_laser(self):
+        self.turtle.hideturtle()
+
+    #testing fire laser function, just moves the turtle
+    def fire_laser(self):
+        player_x_position = player_ship.get_x_position()
+        player_y_position = player_ship.get_y_position()
+        self.turtle.goto(player_x_position, player_y_position + 510)
+        self.turtle.showturtle()
+        screen.ontimer(self.hide_laser, 100)
+
+    #method to fire the laser
+    #def fire_laser(self):
+        #check if there are any aliens above ship (xcor=xcor)
+        #have turtle go to player's current position
+        #show the turtle
+        #kill all aliens above ship
+
+# Create the player's ship
+player_ship = playership()
+
+# Create the laser
+laser_beam = laser()
+
+
+screen.listen()
+screen.onkeypress(player_ship.move_left, "Left")
+screen.onkeypress(player_ship.move_right, "Right")
+screen.onkeypress(laser_beam.fire_laser, "space")
+
+# Main loop
+while(True):
+    #move all aliens
+    screen.update()
