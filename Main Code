@@ -72,7 +72,7 @@ class laser:
         screen.ontimer(self.hide_laser, 100)
 
 
-#class that creates the alien turtle and points it down
+#class that creates the alien turtle and points it down (common to all aliens)
 #includes movement and location methods
 class alien:
     def __init__(self):
@@ -91,7 +91,7 @@ class alien:
     def get_y_position(self):
         return self.turtle.ycor()
 
-    #used in the laser method to hide the alien when killed
+    #used in the laser class to hide the alien when killed
     def hide(self):
         self.turtle.hideturtle()
 
@@ -144,6 +144,7 @@ screen.onkeypress(laser_beam.fire_laser, "space")
 
 #main loop
 while(True):
+    #moves all aliens in the list
     for alien_instance in aliens:
         alien_instance.move()
         if alien_instance.get_y_position() <= -300: #if an alien reaches the bottom/past the player
